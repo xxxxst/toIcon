@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="toIcon.view.ImageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:toIcon.view"
+			 xmlns:supUI="clr-namespace:csharpHelp.ui"
+             mc:Ignorable="d" 
+             d:DesignHeight="128" d:DesignWidth="128" Cursor="Hand" Name="userCtl">
+    <Grid Background="Transparent" Name="grdMain" MouseEnter="GrdMain_MouseEnter" MouseLeave="GrdMain_MouseLeave">
+		<Image VerticalAlignment="Bottom" Width="{Binding ImgSize, ElementName=userCtl}" Height="{Binding ImgSize, ElementName=userCtl}" Source="{Binding Source, ElementName=userCtl}" Name="img"/>
+		<!--<CheckBox Margin="3" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" IsHitTestVisible="False" Name="chkSelect"/>-->
+		<supUI:MiniButton Width="18" Height="18" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" Content="M" Visibility="Collapsed" x:Name="btnMini" ToolTip="Mini Mode" Click="BtnMini_Click"/>
+		<CheckBox VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed" Content="{Binding TextCheckbox, ElementName=userCtl}" Name="chkInfo"/>
+	</Grid>
+</UserControl>

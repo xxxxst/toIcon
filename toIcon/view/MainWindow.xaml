@@ -1,0 +1,171 @@
+﻿<Window x:Class="toIcon.view.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:toIcon.view"
+		xmlns:supUI="clr-namespace:csharpHelp.ui"
+        mc:Ignorable="d"
+        Title="toIcon" Height="230" Width="500" AllowDrop="True" DragOver="Window_DragOver" DragEnter="Window_DragEnter" Drop="Window_Drop" ResizeMode="CanMinimize" Closed="Window_Closed">
+	<Grid Background="Transparent" Name="grdMain">
+
+		<Grid Margin="8,4" Visibility="Visible" Name="grdBox">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="35"/>
+			</Grid.RowDefinitions>
+			<!--<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="70"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>-->
+
+			<Border BorderBrush="#000" BorderThickness="0,0,0,1"/>
+			<Grid Grid.Row="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="70"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="32位" Name="lblLeftTitle32"/>
+
+				<CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_0" Content="256*256"/>
+				<CheckBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_1" Content="128*128"/>
+				<CheckBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_2" Content="96*96"/>
+				<CheckBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_3" Content="72*72"/>
+				<CheckBox Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_4" Content="64*64"/>
+
+				<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_5" Content="48*48"/>
+				<CheckBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_6" Content="32*32"/>
+				<CheckBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_7" Content="24*24"/>
+				<CheckBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_8" Content="16*16"/>
+				<!--<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_0_9" Content="嵌入png"/>-->
+			</Grid>
+
+			<Border Grid.Row="1" BorderBrush="#000" BorderThickness="0,0,0,1"/>
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="70"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="8位" Name="lblLeftTitle8"/>
+
+				<CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_0" Content="256*256"/>
+				<CheckBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_1" Content="128*128"/>
+				<CheckBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_2" Content="96*96"/>
+				<CheckBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_3" Content="72*72"/>
+				<CheckBox Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_4" Content="64*64"/>
+
+				<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_5" Content="48*48"/>
+				<CheckBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_6" Content="32*32"/>
+				<CheckBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_7" Content="24*24"/>
+				<CheckBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_8" Content="16*16"/>
+				<!--<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_1_9" Content="嵌入png"/>-->
+			</Grid>
+
+			<Border Grid.Row="2" BorderBrush="#000" BorderThickness="0,0,0,1"/>
+			<Grid Grid.Row="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="70"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="4位" Name="lblLeftTitle4"/>
+
+				<CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_0" Content="256*256"/>
+				<CheckBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_1" Content="128*128"/>
+				<CheckBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_2" Content="96*96"/>
+				<CheckBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_3" Content="72*72"/>
+				<CheckBox Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_4" Content="64*64"/>
+
+				<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_5" Content="48*48"/>
+				<CheckBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_6" Content="32*32"/>
+				<CheckBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_7" Content="24*24"/>
+				<CheckBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_8" Content="16*16"/>
+				<!--<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_9" Content="嵌入png"/>-->
+			</Grid>
+
+			<supUI:MiniButton Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+		</Grid>
+
+		<Grid Margin="8,0,8,8" Visibility="Collapsed" Name="grdMini">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="24"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<!--<Label Grid.Row="0" Content="设置" Padding="0"/>-->
+			<supUI:MiniButton Background="Transparent" Content="设置" x:Name="btnSetting" Click="BtnSetting_Click"/>
+			<Border BorderBrush="#000" BorderThickness="0,0,0,1"/>
+			
+			<Label Grid.Row="1" Content="拖拽图片到这里" Padding="0" Name="lblDragImage"/>
+		</Grid>
+
+		<!--<Grid Margin="8" Visibility="Visible" Name="grdBox">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="28"/>
+				<RowDefinition Height="130"/>
+				<RowDefinition Height="130"/>
+				<RowDefinition Height="130"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Grid Grid.Row="0" Grid.ColumnSpan="999" Background="Transparent" Name="grdBackRow"/>
+			<Grid Grid.Column="0" Grid.RowSpan="999" Background="Transparent" Name="grdBackCol"/>
+
+			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="32位"/>
+			<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="16位"/>
+			<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="8位"/>
+
+			<Grid Grid.ColumnSpan="999" Background="#000" Height="1" VerticalAlignment="Bottom"/>
+			<Grid Grid.RowSpan="999" Background="#000" Width="1" HorizontalAlignment="Right"/>
+		</Grid>
+
+		<Grid Margin="8,0,8,8" Visibility="Collapsed" Name="grdMini">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="24"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="abc" Padding="0" Name="lblMiniDesc"/>
+
+			<Grid Grid.ColumnSpan="999" Background="#000" Height="1" VerticalAlignment="Bottom"/>
+
+			<local:ImageBox Grid.Row="1" Grid.ColumnSpan="2" Margin="0,2,0,0" Cursor="Arrow" IsMiniMode="True" x:Name="imgBox" OnClickMiniMode="ImgBox_OnClickMiniMode"/>
+		</Grid>-->
+		
+    </Grid>
+</Window>

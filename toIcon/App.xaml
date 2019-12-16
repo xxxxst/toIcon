@@ -1,0 +1,24 @@
+﻿<Application x:Class="toIcon.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:toIcon"
+             StartupUri="view/MainWindow.xaml">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+
+				<ResourceDictionary Source="/sdk/csharpHelp/TextBoxTip/TextBoxTip.xaml" ></ResourceDictionary>
+				<ResourceDictionary Source="/sdk/csharpHelp/TextBoxLabel/TextBoxLabel.xaml" ></ResourceDictionary>
+				<ResourceDictionary Source="/sdk/csharpHelp/CheckBoxBan/CheckBoxBan.xaml" ></ResourceDictionary>
+				<ResourceDictionary Source="/sdk/csharpHelp/LabelSingle/LabelSingle.xaml" ></ResourceDictionary>
+				<ResourceDictionary Source="/sdk/csharpHelp/ComboBoxLabel/ComboBoxLabel.xaml" ></ResourceDictionary>
+				<ResourceDictionary Source="/sdk/csharpHelp/miniButton/MiniButton.xaml" ></ResourceDictionary>
+				<!--<ResourceDictionary Source="/sdk/csharpHelp/ButtonLabel/ButtonLabel.xaml" ></ResourceDictionary>-->
+
+				<ResourceDictionary Source="view/style/ComStyle.xaml"/>
+				<ResourceDictionary Source="view/style/Test.xaml"/>
+
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

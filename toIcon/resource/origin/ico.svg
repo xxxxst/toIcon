@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   viewBox="0 0 4 4"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="ico.svg"
+   inkscape:export-filename="E:\00workself\csharp\project\toIcon\toIcon\resource\icon.png"
+   inkscape:export-xdpi="72"
+   inkscape:export-ydpi="72">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.9999999"
+     inkscape:cx="29.010239"
+     inkscape:cy="37.392236"
+     inkscape:document-units="px"
+     inkscape:current-layer="g929"
+     inkscape:showpageshadow="false"
+     showgrid="false"
+     inkscape:snap-nodes="false"
+     inkscape:snap-others="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 2"
+     style="display:inline">
+    <g
+       id="g929"
+       transform="translate(1.1987192,0.8628773)">
+      <path
+         style="fill:none;stroke:#ea583a;stroke-width:0.375;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 1.7625041,2.0123894 C 0.72265473,2.9933088 -0.8955082,2.0384698 -0.4140591,0.64237014 L -1.0106803,1.2721371"
+         id="use822-1"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccc" />
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path820-2"
+         d="M -0.15994247,0.26185602 C 0.87990693,-0.71906341 2.4980698,0.23577562 2.0166207,1.6318753 l 0.5966212,-0.629767"
+         style="fill:none;stroke:#32496a;stroke-width:0.375;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="Layer 2 复制"
+     id="g937"
+     inkscape:groupmode="layer">
+    <g
+       transform="translate(1.1987192,0.8628773)"
+       id="g935">
+      <path
+         style="fill:none;stroke:#32496a;stroke-width:0.4375;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -0.09744247,-0.58189399 C 1.4410476,-0.59429959 2.0047854,-0.61126853 2.068162,-0.48846183 2.1128751,0.8719758 2.2495328,2.785388 1.7197457,2.8350003 1.9815903,2.7381552 2.1596821,2.6615095 2.5038669,2.4396083"
+         id="path933"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="use957"
+         d="m 1.5976169,2.8631006 c -1.5384901,0.012406 -2.1022279,0.029374 -2.1656045,-0.093432 -0.0447131,-1.3604376 -0.1813708,-3.2738498 0.3484163,-3.3234621 -0.2618446,0.0968451 -0.4399364,0.1734908 -0.7841212,0.395392"
+         style="fill:none;stroke:#ea583a;stroke-width:0.4375;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Layer 2 复制 1"
+     style="display:none">
+    <path
+       style="display:inline;fill:#32496a;fill-opacity:1;stroke:none;stroke-width:0.0625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 0.37095155,2.8234348 c 0,0 0.79245675,-1.5376471 0.94992655,-1.5487824 0.1574698,-0.011136 0.5230058,0.6759474 0.5230058,0.6759474 0,0 0.1199091,-0.181854 0.2515095,-0.1816181 0.1315997,2.363e-4 0.8277717,1.0544531 0.8277717,1.0544531 z"
+       id="path814"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="czczcc" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:none">
+    <g
+       id="g905"
+       transform="translate(0.0546875,-0.0078125)">
+      <text
+         id="text818"
+         y="1.6737899"
+         x="2.5801759"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:0.75px;line-height:1.25;font-family:monospace;-inkscape-font-specification:'monospace Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ea583a;fill-opacity:1;stroke:#ffa794;stroke-width:0.09375;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.5px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#ea583a;fill-opacity:1;stroke:#ffa794;stroke-width:0.09375;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           y="1.6737899"
+           x="2.5801759"
+           id="tspan816"
+           sodipodi:role="line">ICO</tspan></text>
+    </g>
+  </g>
+  <g
+     style="display:inline"
+     id="g984"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1 复制">
+    <g
+       transform="matrix(0.85071065,0,0,0.84418391,-0.2202178,1.0479553)"
+       id="g982"
+       style="stroke-width:1.18002319">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:0.75px;line-height:1.25;font-family:monospace;-inkscape-font-specification:'monospace Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ea583a;fill-opacity:1;stroke:#ff9982;stroke-width:0.07375145;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="2.5787251"
+         y="1.7004954"
+         id="text980"><tspan
+           sodipodi:role="line"
+           id="tspan978"
+           x="2.5787251"
+           y="1.7004954"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.57336426px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#ea583a;fill-opacity:1;stroke:#ff9982;stroke-width:0.07375145;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">ICO</tspan></text>
+    </g>
+  </g>
+</svg>
