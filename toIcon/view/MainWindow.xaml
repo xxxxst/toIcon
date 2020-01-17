@@ -115,7 +115,10 @@
 				<!--<CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chk_2_9" Content="嵌入png"/>-->
 			</Grid>
 
-			<supUI:MiniButton Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+			<Grid Grid.Row="3">
+				<CheckBox VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>
+				<supUI:MiniButton Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+			</Grid>
 		</Grid>
 
 		<Grid Margin="8,0,8,8" Visibility="Collapsed" Name="grdMini">
