@@ -14,9 +14,9 @@
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-			<Label Grid.Column="0" Padding="0" Content="文件 &lt;"/>
+			<Label Grid.Column="0" Padding="0" Content="文件 &lt;" Name="lblStr1"/>
 			<Label Grid.Column="1" Padding="0" Content="aaa.icon" Foreground="#52ccd3" Name="lblFileName"/>
-			<Label Grid.Column="2" Padding="0" Content="&gt; 已存在，确定替换？"/>
+			<Label Grid.Column="2" Padding="0" Content="&gt; 已存在，确定替换？" Name="lblStr2"/>
 		</Grid>
 		<Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10">
 			<Grid.ColumnDefinitions>

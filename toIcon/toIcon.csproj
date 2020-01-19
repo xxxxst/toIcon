@@ -60,20 +60,17 @@
     <ApplicationIcon>resource\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>toIcon.Program</StartupObject>
+    <StartupObject>toIcon.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=3.3.3.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.3.3.3\lib\net40\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="FreeImage-dotnet-core, Version=4.3.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>sdk\freeImage\net45\FreeImage-dotnet-core.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -92,10 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="control\IconCtl.cs" />
-    <Compile Include="control\MainCtl.cs" />
-    <Compile Include="model\CmdMd.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="model\Lang.cs" />
     <Compile Include="sdk\csharpHelp\ButtonLabel\ButtonLabel.cs" />
     <Compile Include="sdk\csharpHelp\CheckBoxBan\CheckBoxBan.cs" />
     <Compile Include="sdk\csharpHelp\ClassLink.cs" />
@@ -138,26 +132,6 @@
     <Compile Include="view\Popwin.xaml.cs">
       <DependentUpon>Popwin.xaml</DependentUpon>
     </Compile>
-    <Page Include="view\ImageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="util\SysConst.cs" />
-    <Compile Include="view\ImageBox.xaml.cs">
-      <DependentUpon>ImageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="sdk\csharpHelp\ButtonLabel\ButtonLabel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -186,6 +160,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\ImageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="util\SysConst.cs" />
+    <Compile Include="view\ImageBox.xaml.cs">
+      <DependentUpon>ImageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Page Include="view\Popwin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,8 +234,12 @@
     <Resource Include="FodyWeavers.xml" />
     <Resource Include="resource\icon.ico" />
     <Resource Include="resource\icon.png" />
-    <Content Include="sdk\freeImage\net45\FreeImage-dotnet-core.dll" />
-    <Content Include="sdk\freeImage\x32\FreeImage.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\toIconCom\toIconCom.csproj">
+      <Project>{eb6932ad-18d2-4359-b297-c33e002b1732}</Project>
+      <Name>toIconCom</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -252,7 +250,8 @@
     <Error Condition="!Exists('..\packages\Fody.4.2.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.4.2.1\build\Fody.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(ProjectDir)sdk\freeImage\x32\*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(SolutionDir)toIconCom\sdk\freeImage\x32\*" "$(TargetDir)"
+xcopy /y /d "$(SolutionDir)ctoIcon\bin\x86\$(ConfigurationName)\ctoIcon.exe" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets') AND '$(Configuration)' == 'Release'" />
 </Project>

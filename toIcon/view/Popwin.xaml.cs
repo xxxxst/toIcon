@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using toIcon.model;
 
 namespace toIcon.view {
 	/// <summary>
@@ -22,6 +23,13 @@ namespace toIcon.view {
 
 		public Popwin() {
 			InitializeComponent();
+
+			lblStr1.Content = Lang.ins.langStrPopWin1;
+			lblStr2.Content = Lang.ins.langStrPopWin2;
+			btnReplace.Content = Lang.ins.langReplace;
+			btnReplaceAll.Content = Lang.ins.langReplaceAll;
+			btnJump.Content = Lang.ins.langJump;
+			btnCancel.Content = Lang.ins.langCancel;
 		}
 
 		public void show(Window parent, string fileName) {

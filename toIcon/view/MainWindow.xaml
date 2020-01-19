@@ -116,8 +116,16 @@
 			</Grid>
 
 			<Grid Grid.Row="3">
-				<CheckBox VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>
-				<supUI:MiniButton Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<!--<CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>-->
+				<Label Grid.Column="0" Margin="5,0,0,0" Content="文件存在时"/>
+				<ComboBox Grid.Column="1" Width="80" Height="24" Margin="5,0,0,0" Name="cbxOperate"/>
+				<supUI:MiniButton Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
 			</Grid>
 		</Grid>
 

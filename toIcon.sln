@@ -4,6 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toIcon", "toIcon\toIcon.csproj", "{711B91D0-6904-4340-A214-B266ECCCDD25}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7} = {C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ctoIcon", "ctoIcon\ctoIcon.csproj", "{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toIconCom", "toIconCom\toIconCom.csproj", "{EB6932AD-18D2-4359-B297-C33E002B1732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +28,22 @@ Global
 		{711B91D0-6904-4340-A214-B266ECCCDD25}.Release|Any CPU.Build.0 = Release|Any CPU
 		{711B91D0-6904-4340-A214-B266ECCCDD25}.Release|x86.ActiveCfg = Release|Any CPU
 		{711B91D0-6904-4340-A214-B266ECCCDD25}.Release|x86.Build.0 = Release|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5E6AE10-6C94-401B-9A5A-97AB00E3DEC7}.Release|x86.Build.0 = Release|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Debug|x86.Build.0 = Debug|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB6932AD-18D2-4359-B297-C33E002B1732}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

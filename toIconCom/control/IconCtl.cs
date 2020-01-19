@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace toIcon.control {
+namespace toIconCom.control {
 	public enum ExportFileType {
 		Auto, Ico, Bmp, Jpg, Png
 	}
@@ -20,19 +20,50 @@ namespace toIcon.control {
 	}
 
 	public class IconCtl {
-		public int[] lstSupportIconSize = new int[] { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
+		//public int[] lstSupportIconSize = new int[] { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
+		//public int[] lstSupportBpp = new int[] { 32, 8, 4 };
+		HashSet<int> hsIconSize = new HashSet<int>() { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
+		HashSet<int> hsBpp = new HashSet<int>() { 32, 8, 4 };
 
 		HashSet<string> hsImageSuffix = new HashSet<string>() { ".ico", ".bmp", ".jpg", ".png" };
 		HashSet<string> hsSupportOutType = new HashSet<string>() { "auto", "ico", "bmp", "jpg", "png" };
 		HashSet<string> hsSupportOperate = new HashSet<string>() { "jump", "rename", "overwrite" };
 
+		private bool isDefaultIcon(int size, int bpp) {
+			return (size == 48 && bpp == 32);
+		}
+
+		private bool isDefaultBpp(int r) {
+			return r == 0;
+		}
+
+		//private void ergDir(string path, ref List<string> lstPath) {
+		//	if(!Directory.Exists(path)) {
+		//		return;
+		//	}
+		//	DirectoryInfo info = new DirectoryInfo(path);
+		//	foreach(FileInfo NextFile in info.GetFiles()) {
+		//		if(NextFile.Name == "0-0-11.grid")
+		//			continue;
+
+		//		// 获取文件完整路径
+		//		string heatmappath = NextFile.FullName;
+
+		//	}
+		//}
+
 		public string convert(string[] srcMultiPath, string dstDir, string multiSizeBpp, string outType = "auto", string operate = "rename") {
 			string rstInfo = "Success";
 
-			HashSet<int> hsIconSize = new HashSet<int>();
-			for(int i = 0; i < lstSupportIconSize.Length; ++i) {
-				hsIconSize.Add(lstSupportIconSize[i]);
-			}
+			//HashSet<int> hsIconSize = new HashSet<int>();
+			//for(int i = 0; i < lstSupportIconSize.Length; ++i) {
+			//	hsIconSize.Add(lstSupportIconSize[i]);
+			//}
+
+			//HashSet<int> hsBpp = new HashSet<int>();
+			//for(int i = 0; i < lstSupportBpp.Length; ++i) {
+			//	hsBpp.Add(lstSupportBpp[i]);
+			//}
 
 			List<int> lstIcoSize = new List<int>();
 			List<int> lstIcoBpp = new List<int>();
@@ -66,9 +97,24 @@ namespace toIcon.control {
 						return getErrorInfo(multiSizeBpp);
 					}
 				}
+				if(!hsBpp.Contains(bpp)) {
+					return getErrorInfo(multiSizeBpp);
+				}
 				lstIcoSize.Add(size);
 				lstIcoBpp.Add(bpp);
 			}
+
+			if(lstIcoSize.Count == 0) {
+				lstIcoSize.Add(48);
+				lstIcoBpp.Add(32);
+			}
+
+			//List<string> lstSrcPath = new List<string>();
+			//for(int i = 0; i < srcMultiPath.Length; ++i) {
+			//	if(Directory.Exists(path)) {
+			//		continue;
+			//	}
+			//}
 
 			for(int i = 0; i < lstIcoSize.Count; ++i) {
 				for(int j = 0; j < srcMultiPath.Length; ++j) {
@@ -80,8 +126,17 @@ namespace toIcon.control {
 						continue;
 					}
 					string suffix = Path.GetExtension(path).ToLower();
-					string dir = Path.GetDirectoryName(path);
+					string dir = Path.GetDirectoryName(path) + "/";
+					if(dstDir != "") {
+						dir = dstDir + "/";
+					}
+					Directory.CreateDirectory(dir);
+
 					string fname = Path.GetFileNameWithoutExtension(path);
+					if(!isDefaultIcon(lstIcoSize[i], lstIcoBpp[i])) {
+						fname = $"{fname}_{lstIcoSize[i]}_{lstIcoBpp[i]}";
+					}
+
 					string outSuffix = getOutFileSuffix(suffix, outType);
 					string dstPath = dir + fname + outSuffix;
 					if(File.Exists(dstPath)) {
@@ -92,6 +147,7 @@ namespace toIcon.control {
 							case "rename": default: dstPath = renameDstFileName(dstPath); break;
 						}
 					}
+					//Debug.WriteLine(path + "," + dstPath + "," + lstIcoSize[i] + "," + lstIcoBpp[i]);
 					convert(path, dstPath, lstIcoSize[i], lstIcoBpp[i]);
 					//if(hsImageSuffix.Contains(suffix)) {
 						
@@ -108,7 +164,7 @@ namespace toIcon.control {
 			string fname = Path.GetFileNameWithoutExtension(dstPath);
 			int idx = 0;
 			do {
-				string path = dir + fname + "." + idx + suffix;
+				string path = dir + "/" + fname + "." + idx + suffix;
 				if(!File.Exists(path)) {
 					return path;
 				}
