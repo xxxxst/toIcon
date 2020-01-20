@@ -411,7 +411,7 @@ namespace csharpHelp {
 	}
 
 	public enum CmdAttrType {
-		Attr, Single,
+		Root, Attr, Single,
 	}
 
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
@@ -439,11 +439,12 @@ namespace csharpHelp {
 	}
 
 	[AttributeUsage(AttributeTargets.Class)]
-	public class CmdRoot : Attribute {
-		public string desc = "";
+	public class CmdRoot : CmdAttr {
+		//public string desc = "";
 
-		public CmdRoot(string _desc = "") {
-			desc = _desc;
+		public CmdRoot(string _desc = ""): base("", "", _desc) {
+			//desc = _desc;
+			type = CmdAttrType.Root;
 		}
 	}
 }

@@ -20,6 +20,8 @@ using System.Windows.Shapes;
 using toIcon.model;
 using toIcon.util;
 using toIconCom.control;
+using toIconCom.model;
+using toIconCom.util;
 
 namespace toIcon.view {
 	/// <summary>
@@ -52,12 +54,22 @@ namespace toIcon.view {
 
 		public MainWindow() {
 			InitializeComponent();
+			
+			//set icon
+			Uri iconUri = new Uri(LocalRes.icon16(), UriKind.RelativeOrAbsolute);
+			Icon = BitmapFrame.Create(iconUri, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+
+			lblVersion.Content = "v" + ComSysConst.version;
 
 			lblLeftTitle32.Content = 32 + Lang.ins.langBpp;
 			lblLeftTitle8.Content = 8 + Lang.ins.langBpp;
 			lblLeftTitle4.Content = 4 + Lang.ins.langBpp;
 			btnSetting.Content = Lang.ins.langSetting + "48*48 | 32" + Lang.ins.langBpp;
 			lblDragImage.Content = Lang.ins.langDragImageHere;
+			lblOutType.Content = Lang.ins.langOutType;
+			lblWhenFileExist.Content = Lang.ins.langWhenFileExist;
+			//lblWhenFileExist2.Content = Lang.ins.langWhenFileExist;
+			btnOk.Content = Lang.ins.langOk;
 
 			normalWidth = Width;
 			normalHeight = Height;
@@ -91,6 +103,13 @@ namespace toIcon.view {
 			//	createImage(lstImg4, lstSize[i], 3, i + 1);
 			//}
 
+			cbxOutType.Items.Add(Lang.ins.langAuto);
+			cbxOutType.Items.Add("ico");
+			cbxOutType.Items.Add("png");
+			cbxOutType.Items.Add("jpg");
+			cbxOutType.Items.Add("bmp");
+			cbxOutType.SelectedIndex = 0;
+
 			cbxOperate.Items.Add(Lang.ins.langRename);
 			cbxOperate.Items.Add(Lang.ins.langReplace);
 			cbxOperate.Items.Add(Lang.ins.langJump);
@@ -111,6 +130,7 @@ namespace toIcon.view {
 				parser = new IniParse(path);
 
 				if(!File.Exists(path)) {
+					WindowStartupLocation = WindowStartupLocation.CenterScreen;
 					return;
 				}
 
@@ -141,11 +161,23 @@ namespace toIcon.view {
 					arrCheckBox[r][c].IsChecked = true;
 				}
 
+				// outType
+				str = parser["config"]["outType"];
+				int.TryParse(str, out int outType);
+				if(outType < 0 || outType >= cbxOutType.Items.Count) {
+					outType = 0;
+				}
+				cbxOutType.SelectedIndex = outType;
+				lblShowOutType.Content = cbxOutType.Items[outType].ToString();
+
+				// operate
 				str = parser["config"]["operate"];
 				int.TryParse(str, out int operate);
-				if(operate >= 0 && operate < cbxOperate.Items.Count) {
-					cbxOperate.SelectedIndex = operate;
+				if(operate < 0 || operate >= cbxOperate.Items.Count) {
+					operate = 0;
 				}
+				cbxOperate.SelectedIndex = operate;
+				lblShowOperate.Content = cbxOperate.Items[operate].ToString();
 			} catch(Exception ex) { Debug.WriteLine(ex); }
 		}
 
@@ -172,6 +204,7 @@ namespace toIcon.view {
 					}
 				}
 				parser["config"]["checked"] = str;
+				parser["config"]["outType"] = "" + cbxOutType.SelectedIndex;
 				parser["config"]["operate"] = "" + cbxOperate.SelectedIndex;
 
 				parser.save();
@@ -242,6 +275,16 @@ namespace toIcon.view {
 			return rst;
 		}
 
+		private string getOutType() {
+			switch(cbxOutType.SelectedIndex) {
+				case 1: return "ico";
+				case 2: return "png";
+				case 3: return "jpg";
+				case 4: return "bmp";
+				default: return "auto";
+			}
+		}
+
 		private string getOperateStr() {
 			switch(cbxOperate.SelectedIndex) {
 				case 1: return "overwrite";
@@ -252,9 +295,10 @@ namespace toIcon.view {
 
 		private void export(string[] srcMultiPath) {
 			string bppSize = getBppSizeStr();
+			string outType = getOutType();
 			string operate = getOperateStr();
 
-			iconCtl.convert(srcMultiPath, "", bppSize, "auto", operate);
+			iconCtl.convert(srcMultiPath, "", bppSize, outType, operate);
 			return;
 
 			//if(!File.Exists(srcPath)) {
@@ -480,6 +524,14 @@ namespace toIcon.view {
 		}
 
 		void updateSettingText() {
+			if(cbxOutType.SelectedIndex >= 0) {
+				lblShowOutType.Content = cbxOutType.Items[cbxOutType.SelectedIndex].ToString();
+			}
+
+			if(cbxOperate.SelectedIndex >= 0) {
+				lblShowOperate.Content = cbxOperate.Items[cbxOperate.SelectedIndex].ToString();
+			}
+
 			string checkedSize = "48*48 | 32" + Lang.ins.langBpp;
 			int checkedCount = 0;
 			for(int i = 0; i < lstSize.Length; ++i) {

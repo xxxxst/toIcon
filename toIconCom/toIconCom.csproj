@@ -52,8 +52,11 @@
     <Compile Include="control\IconCtl.cs" />
     <Compile Include="control\MainCtl.cs" />
     <Compile Include="model\CmdMd.cs" />
+    <Compile Include="model\Lang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sdk\csharpHelp\CmdParser.cs" />
+    <Compile Include="util\ComSysConst.cs" />
+    <Compile Include="util\FileIcon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sdk\freeImage\net45\FreeImage-dotnet-core.dll" />

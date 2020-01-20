@@ -89,12 +89,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="model\Lang.cs" />
+    <Compile Include="model\LocalRes.cs" />
     <Compile Include="sdk\csharpHelp\ButtonLabel\ButtonLabel.cs" />
     <Compile Include="sdk\csharpHelp\CheckBoxBan\CheckBoxBan.cs" />
     <Compile Include="sdk\csharpHelp\ClassLink.cs" />
     <Compile Include="sdk\csharpHelp\Cmd.cs" />
-    <Compile Include="sdk\csharpHelp\CmdParser.cs" />
     <Compile Include="sdk\csharpHelp\ComboBoxLabel\ComboBoxLabel.cs" />
     <Compile Include="sdk\csharpHelp\ComExtension.cs" />
     <Compile Include="sdk\csharpHelp\CommandService.cs" />
@@ -227,9 +226,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="source\origin\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
     <Resource Include="resource\icon.ico" />
@@ -240,6 +237,9 @@
       <Project>{eb6932ad-18d2-4359-b297-c33e002b1732}</Project>
       <Name>toIconCom</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\icon16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

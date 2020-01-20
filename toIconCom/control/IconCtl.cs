@@ -2,10 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using toIconCom.util;
 
 namespace toIconCom.control {
 	public enum ExportFileType {
@@ -13,20 +17,22 @@ namespace toIconCom.control {
 	}
 
 	public enum IcoExportOperate {
-		Jump,
-		Rename,
-		Overwrite,
-		Cancel,
+		Jump, Rename, Overwrite, Cancel,
 	}
 
 	public class IconCtl {
+		//[DllImport("User32.dll")]
+		//public static extern int PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, int[] piconid, int nIcons, int flags);
+		//[DllImport("User32.dll")]
+		//public static extern bool DestroyIcon(IntPtr hIcon);
+
 		//public int[] lstSupportIconSize = new int[] { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
 		//public int[] lstSupportBpp = new int[] { 32, 8, 4 };
 		HashSet<int> hsIconSize = new HashSet<int>() { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
 		HashSet<int> hsBpp = new HashSet<int>() { 32, 8, 4 };
 
 		HashSet<string> hsImageSuffix = new HashSet<string>() { ".ico", ".bmp", ".jpg", ".png" };
-		HashSet<string> hsSupportOutType = new HashSet<string>() { "auto", "ico", "bmp", "jpg", "png" };
+		HashSet<string> hsSupportOutType = new HashSet<string>() { "auto", "ico", "png", "jpg", "bmp" };
 		HashSet<string> hsSupportOperate = new HashSet<string>() { "jump", "rename", "overwrite" };
 
 		private bool isDefaultIcon(int size, int bpp) {
@@ -119,10 +125,10 @@ namespace toIconCom.control {
 			for(int i = 0; i < lstIcoSize.Count; ++i) {
 				for(int j = 0; j < srcMultiPath.Length; ++j) {
 					string path = srcMultiPath[j];
-					if(Directory.Exists(path)) {
-						continue;
-					}
-					if(!File.Exists(path)) {
+					//if(Directory.Exists(path)) {
+					//	continue;
+					//}
+					if(!File.Exists(path) && !Directory.Exists(path)) {
 						continue;
 					}
 					string suffix = Path.GetExtension(path).ToLower();
@@ -150,7 +156,7 @@ namespace toIconCom.control {
 					//Debug.WriteLine(path + "," + dstPath + "," + lstIcoSize[i] + "," + lstIcoBpp[i]);
 					convert(path, dstPath, lstIcoSize[i], lstIcoBpp[i]);
 					//if(hsImageSuffix.Contains(suffix)) {
-						
+
 					//}
 				}
 			}
@@ -170,12 +176,11 @@ namespace toIconCom.control {
 				}
 				++idx;
 			} while(true);
-
-			//return "";
 		}
 
 		private string getOutFileSuffix(string srcFileSuffix, string outType) {
-			string rst = "";
+			srcFileSuffix = srcFileSuffix.ToLower();
+			//string rst = "";
 			switch(outType) {
 				case "ico":
 				case "bmp":
@@ -185,18 +190,17 @@ namespace toIconCom.control {
 				}
 				case "auto":
 				default: {
-					if(srcFileSuffix.ToLower() == ".ico") {
+					//return ".png";
+					if(srcFileSuffix == ".ico") {
 						return ".png";
 					}
-					return ".ico";
-					//if(hsImageSuffix.Contains(srcFileSuffix)) {
-					//	return ".ico";
-					//}
-					//break;
+					if(hsImageSuffix.Contains(srcFileSuffix)) {
+						return ".ico";
+					}
+					return ".png";
+					//return ".ico";
 				}
 			}
-
-			//return "";
 		}
 
 		private string getErrorInfo(string param) {
@@ -213,6 +217,8 @@ namespace toIconCom.control {
 
 		public void convert(string srcPath, string dstPath, int icoSize, int bpp) {
 			string srcSuffix = Path.GetExtension(srcPath).ToLower();
+			string dstSuffix = Path.GetExtension(dstPath).ToLower();
+			//bool isDir = Directory.Exists(srcPath);
 
 			// save
 			try {
@@ -230,10 +236,54 @@ namespace toIconCom.control {
 						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
 						break;
 					}
-					case ".png":
-					default: {
+					case ".png": {
 						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
 						break;
+					}
+					//case ".exe": {
+					//	//var iconTotalCount = PrivateExtractIcons(srcPath, 0, 0, 0, null, null, 0, 0);
+					//	int iconTotalCount = 1;
+					//	IntPtr[] hIcons = new IntPtr[iconTotalCount];
+					//	int[] ids = new int[iconTotalCount];
+					//	var successCount = PrivateExtractIcons(srcPath, 0, 48, 48, hIcons, ids, iconTotalCount, 0);
+					//	if(successCount <= 0) {
+					//		//Bitmap img = Icon.ExtractAssociatedIcon(srcPath).ToBitmap();
+					//		Bitmap img = FileIcon.getIcon(srcPath).ToBitmap();
+					//		dib = FreeImage.CreateFromBitmap(img);
+					//		break;
+					//	}
+					//	using(var ico = Icon.FromHandle(hIcons[0])) {
+					//		dib = FreeImage.CreateFromBitmap(ico.ToBitmap());
+					//	}
+					//	DestroyIcon(hIcons[0]);
+					//	break;
+					//}
+					default: {
+						//if(isDir) {
+						//	Bitmap img = FileIcon.getIcon(srcPath);
+						//	if(img == null) {
+						//		return;
+						//	}
+						//	//Debug.WriteLine("aaa:" + img.Width + "," + img.Height);
+						//	dib = FreeImage.CreateFromBitmap(img);
+						//	break;
+						//} else {
+						//	//dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+						//	//Bitmap img = Icon.ExtractAssociatedIcon(srcPath).ToBitmap();
+						//	Bitmap img = FileIcon.getIcon(srcPath);
+						//	if(img == null) {
+						//		return;
+						//	}
+						//	//Debug.WriteLine("aaa:" + img.Width + "," + img.Height);
+						//	dib = FreeImage.CreateFromBitmap(img);
+						//}
+						Bitmap img = FileIcon.getIcon(srcPath, icoSize);
+						if(img == null) {
+							return;
+						}
+						dib = FreeImage.CreateFromBitmap(img);
+						break;
+						//return;
 					}
 				}
 				//FIBITMAP dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
@@ -243,7 +293,15 @@ namespace toIconCom.control {
 
 				FIBITMAP dibOut = formatImage(dib, icoSize, bpp);
 
-				FreeImage.Save(FREE_IMAGE_FORMAT.FIF_ICO, dibOut, dstPath, FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE);
+				FREE_IMAGE_FORMAT format = FREE_IMAGE_FORMAT.FIF_ICO;
+				FREE_IMAGE_SAVE_FLAGS flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE;
+				switch(dstSuffix) {
+					case ".png": format = FREE_IMAGE_FORMAT.FIF_PNG; flag = FREE_IMAGE_SAVE_FLAGS.PNG_Z_DEFAULT_COMPRESSION; break;
+					case ".jpg": format = FREE_IMAGE_FORMAT.FIF_JPEG; flag = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD; break;
+					case ".bmp": format = FREE_IMAGE_FORMAT.FIF_BMP; flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE; break;
+					case ".ico": default: break;
+				}
+				FreeImage.Save(format, dibOut, dstPath, flag);
 				//bool isOk = FreeImage.Save(FREE_IMAGE_FORMAT.FIF_PNG, dibOut, dstPath + ".png", FREE_IMAGE_SAVE_FLAGS.PNG_INTERLACED);
 				FreeImage.Unload(dibOut);
 				FreeImage.Unload(dib);

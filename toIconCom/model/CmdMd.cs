@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace toIconCom.model {
-	[CmdRoot("toIcon [-s][-d][-t][-o][-b][-h]")]
+	[CmdRoot("ctoIcon.exe [-s][-d][-t][-o][-b][-h]")]
 	public class CmdMd {
 
 		//[CmdSingle("eee", "eeeeee")]
@@ -33,19 +33,19 @@ namespace toIconCom.model {
 		[CmdAttr("src", "s", "multiple source file. file1 file2 ...")]
 		public IList<string> srcPath = new List<string>();
 
-		[CmdAttr("dst", "d", "dist file directory, output to source directory if is empty")]
+		[CmdAttr("dst", "d", "out file directory, output to source directory if is empty")]
 		public string dstDir = "";
 
 		//[CmdAttr("filter", "f", "filter file if src is directry\r\ne.g. *.png|*.jpg")]
 		//public string filter = "";
 
-		[CmdAttr("type", "t", "out file type\r\noptional:auto,ico,bmp,jpg,png\r\ndefault is auto:\r\nout ico if src is not ico\r\nout png if src is ico")]
+		[CmdAttr("type", "t", "out file type\r\noptional: auto,ico,bmp,jpg,png. default is auto:\r\nout ico if src is image\r\nout png if src is ico\r\nout png if src is orther file")]
 		public string type = "auto";
 
 		[CmdAttr("operate", "o", "operate when file exist\r\noptional:rename,jump,overwrite\r\ndefault is rename")]
 		public string operate = "rename";
 
-		[CmdAttr("bppSize", "b", "bpp and size, multiple output split by ';'\r\n[size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48")]
+		[CmdAttr("bppSize", "b", "size and bpp, multiple out split by ';', bpp can be ignore\r\nusage: [size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48")]
 		public string bppSize = "";
 
 		[CmdAttr("help", "h", "help")]

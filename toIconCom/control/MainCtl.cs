@@ -55,8 +55,8 @@ namespace toIconCom.control {
 			//}
 			//Debug.WriteLine("aaa:" + str);
 
-			if(md.help) {
-				Console.WriteLine(parser.getHelp());
+			if(md.help || args.Length == 0) {
+				Console.WriteLine(getHelp(parser));
 				return;
 			}
 
@@ -80,6 +80,22 @@ namespace toIconCom.control {
 			//});
 			//Debug.WriteLine("--------------------------------------------------------------------------------");
 			//Debug.WriteLine(help);
+		}
+
+		private string getHelp(CmdParser<CmdMd> parser) {
+			string help = parser.getHelp(it => {
+				switch(it.attr.name) {
+					case "src": return Lang.ins.langHelpSrc;
+					case "dst": return Lang.ins.langHelpDst;
+					case "type": return Lang.ins.langHelpType;
+					case "operate": return Lang.ins.langHelpOperate;
+					case "bppSize": return Lang.ins.langHelpBppSize;
+					case "help": return Lang.ins.langHelpHelp;
+					default: return it.attr.desc;
+				}
+			});
+
+			return help;
 		}
 	}
 }

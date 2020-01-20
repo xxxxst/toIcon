@@ -120,16 +120,21 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<!--<CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>-->
-				<Label Grid.Column="0" Margin="5,0,0,0" Content="文件存在时"/>
-				<ComboBox Grid.Column="1" Width="80" Height="24" Margin="5,0,0,0" Name="cbxOperate"/>
-				<supUI:MiniButton Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+				<Label Grid.Column="0" Margin="5,0,0,0" Content="输出格式" Name="lblOutType"/>
+				<ComboBox Grid.Column="1" Margin="5,0,0,0" Width="80" Height="24" Name="cbxOutType"/>
+				
+				<Label Grid.Column="2" Margin="5,0,0,0" Content="文件存在时" Name="lblWhenFileExist"/>
+				<ComboBox Grid.Column="3" Margin="5,0,0,0" Width="80" Height="24" Name="cbxOperate"/>
+				
+				<supUI:MiniButton Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
 			</Grid>
 		</Grid>
 
-		<Grid Margin="8,0,8,8" Visibility="Collapsed" Name="grdMini">
+		<Grid Margin="8,0,8,4" Visibility="Collapsed" Name="grdMini">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="24"/>
 				<RowDefinition Height="*"/>
@@ -137,8 +142,23 @@
 			<!--<Label Grid.Row="0" Content="设置" Padding="0"/>-->
 			<supUI:MiniButton Background="Transparent" Content="设置" x:Name="btnSetting" Click="BtnSetting_Click"/>
 			<Border BorderBrush="#000" BorderThickness="0,0,0,1"/>
-			
-			<Label Grid.Row="1" Content="拖拽图片到这里" Padding="0" Name="lblDragImage"/>
+
+			<Label Grid.Row="1" Content="拖拽图片到这里" Padding="0" Margin="0,0,0,15" Name="lblDragImage"/>
+			<Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<!--<Label Grid.Column="0" Margin="0,0,5,0" Content="文件存在时" Padding="0" FontSize="11" Name="lblWhenFileExist2"/>-->
+				<Label Grid.Column="0" Content="" Padding="0" FontSize="11" Name="lblShowOutType"/>
+				<Label Grid.Column="1" Content=" | " Padding="0" FontSize="11"/>
+				<Label Grid.Column="2" Content="" Padding="0" FontSize="11" Name="lblShowOperate"/>
+				<Label Grid.Column="3" Content=" | " Padding="0" FontSize="11"/>
+				<Label Grid.Column="4" Content="" Padding="0" FontSize="11" Name="lblVersion"/>
+			</Grid>
 		</Grid>
 
 		<!--<Grid Margin="8" Visibility="Visible" Name="grdBox">
