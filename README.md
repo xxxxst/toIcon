@@ -10,6 +10,10 @@ create image from system icon of any file or directory
 
 ---
 
+## require
+
+.net framework 4.5 or high
+
 ## locals
 
 English | 简体中文
@@ -20,13 +24,13 @@ C# | WPF
 
 <img src="./doc/icon.png"/>
 
----
+` `
 
 <img src="./doc/preview1.png"/>
 
-<img src="./doc/preview2.png"/>
+` `
 
----
+<img src="./doc/preview2.png"/>
 
 ## run with console
 
@@ -51,3 +55,15 @@ ctoIcon.exe [-s][-d][-t][-o][-b][-h]
                       default is 48
   -h,--help         help
 ```
+
+---
+
+## Dependencies
+- FreeImage
+- Fody
+
+## license
+
+GPL-3.0
+
+[https://github.com/xxxxst/totIcon/blob/master/LICENSE.txt](https://github.com/xxxxst/totIcon/blob/master/LICENSE.txt)
