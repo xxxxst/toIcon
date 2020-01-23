@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace toIconCom.util {
 	public class ComSysConst {
-		public const string version = "1.0.0";
+		public const string version = "1.0.1";
 	}
 }

@@ -28,6 +28,8 @@ namespace toIcon.view {
 	/// MainWindow.xaml 的交互逻辑
 	/// </summary>
 	public partial class MainWindow : Window {
+		public static MainWindow ins = null;
+
 		int[] lstSize = new int[] { 256, 128, 96, 72, 64, 48, 32, 24, 16 };
 		
 		CheckBox[][] arrCheckBox = new CheckBox[0][];
@@ -54,22 +56,14 @@ namespace toIcon.view {
 
 		public MainWindow() {
 			InitializeComponent();
-			
+
+			ins = this;
+
 			//set icon
-			Uri iconUri = new Uri(LocalRes.icon16(), UriKind.RelativeOrAbsolute);
-			Icon = BitmapFrame.Create(iconUri, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+			//Uri iconUri = new Uri(LocalRes.icon16(), UriKind.RelativeOrAbsolute);
+			//Icon = BitmapFrame.Create(iconUri, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
 
 			lblVersion.Content = "v" + ComSysConst.version;
-
-			lblLeftTitle32.Content = 32 + Lang.ins.langBpp;
-			lblLeftTitle8.Content = 8 + Lang.ins.langBpp;
-			lblLeftTitle4.Content = 4 + Lang.ins.langBpp;
-			btnSetting.Content = Lang.ins.langSetting + "48*48 | 32" + Lang.ins.langBpp;
-			lblDragImage.Content = Lang.ins.langDragImageHere;
-			lblOutType.Content = Lang.ins.langOutType;
-			lblWhenFileExist.Content = Lang.ins.langWhenFileExist;
-			//lblWhenFileExist2.Content = Lang.ins.langWhenFileExist;
-			btnOk.Content = Lang.ins.langOk;
 
 			normalWidth = Width;
 			normalHeight = Height;
@@ -116,7 +110,48 @@ namespace toIcon.view {
 			cbxOperate.SelectedIndex = 0;
 
 			loadConfig();
+			onLangUpdate();
+
 			updateSettingText();
+		}
+
+		private void onLangUpdate() {
+			lblLeftTitle32.Content = 32 + Lang.ins.langBpp;
+			lblLeftTitle8.Content = 8 + Lang.ins.langBpp;
+			lblLeftTitle4.Content = 4 + Lang.ins.langBpp;
+			btnSetting.Content = Lang.ins.langSetting + "48*48 | 32" + Lang.ins.langBpp;
+			lblDragImage.Content = Lang.ins.langDragImageHere;
+			lblOutType.Content = Lang.ins.langOutType;
+			lblWhenFileExist.Content = Lang.ins.langWhenFileExist;
+			//lblWhenFileExist2.Content = Lang.ins.langWhenFileExist;
+			btnOk.Content = Lang.ins.langOk;
+			cbxOutType.ToolTip = Lang.ins.langAutoDesc;
+			btnMoreSetting.Content = Lang.ins.langMoreSetting;
+
+			int idx = cbxOutType.SelectedIndex;
+			cbxOutType.Items.Clear();
+			cbxOutType.Items.Add(Lang.ins.langAuto);
+			cbxOutType.Items.Add("ico");
+			cbxOutType.Items.Add("png");
+			cbxOutType.Items.Add("jpg");
+			cbxOutType.Items.Add("bmp");
+			cbxOutType.SelectedIndex = idx;
+
+			int idx2 = cbxOperate.SelectedIndex;
+			cbxOperate.Items.Clear();
+			cbxOperate.Items.Add(Lang.ins.langRename);
+			cbxOperate.Items.Add(Lang.ins.langReplace);
+			cbxOperate.Items.Add(Lang.ins.langJump);
+			cbxOperate.SelectedIndex = idx2;
+		}
+
+		public void updateLang(string lang) {
+			if (lang == Lang.ins.nowLang) {
+				return;
+			}
+
+			Lang.ins.setLang(lang);
+			onLangUpdate();
 		}
 
 		private int getInt(string str, int def = 0) {
@@ -137,7 +172,11 @@ namespace toIcon.view {
 				Left = parser["win"].getInt("x", 100);
 				Top = parser["win"].getInt("y", 100);
 
-				string str = parser["config"]["miniMode"];
+				// language
+				string str = parser["win"]["language"];
+				Lang.ins.setLang(str);
+
+				str = parser["config"]["miniMode"];
 				if(str != "" && str != "0") {
 					setMiniMode(true);
 				}
@@ -185,8 +224,9 @@ namespace toIcon.view {
 			try {
 				parser["win"].setInt("x", (int)Left);
 				parser["win"].setInt("y", (int)Top);
+				parser["win"]["language"] = Lang.ins.nowLang;
 
-				if(isMiniMode) {
+				if (isMiniMode) {
 					//parser["config"]["miniMode"] = miniSelectRow + "," + miniSelectCol;
 					parser["config"]["miniMode"] = "1";
 				} else {
@@ -564,6 +604,10 @@ namespace toIcon.view {
 
 		private void BtnSetting_Click(object sender, RoutedEventArgs e) {
 			setMiniMode(false);
+		}
+
+		private void BtnMoreSetting_Click(object sender, RoutedEventArgs e) {
+			new SettingWin().show(this);
 		}
 	}
 }

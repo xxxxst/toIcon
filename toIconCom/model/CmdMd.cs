@@ -48,6 +48,9 @@ namespace toIconCom.model {
 		[CmdAttr("bppSize", "b", "size and bpp, multiple out split by ';', bpp can be ignore\r\nusage: [size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48")]
 		public string bppSize = "";
 
+		[CmdAttr("version", "v", "version")]
+		public bool version = false;
+
 		[CmdAttr("help", "h", "help")]
 		public bool help = false;
 	}

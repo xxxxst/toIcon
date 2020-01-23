@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using toIconCom.model;
+using toIconCom.util;
 
 namespace toIconCom.control {
 	public class MainCtl {
@@ -37,8 +38,8 @@ namespace toIconCom.control {
 
 			CmdParser<CmdMd> parser = new CmdParser<CmdMd>(args);
 			var md = parser.getModel();
-			//Debug.WriteLine("    aaa:" + string.Join(" ", args));
-			//Debug.WriteLine("srcPath:" + string.Join(",", md.srcPath));
+			//Console.WriteLine("    aaa:" + string.Join(" ", args));
+			//Console.WriteLine("srcPath:" + string.Join(",", md.srcPath));
 			//Debug.WriteLine(" dstDir:" + md.dstDir);
 			//Debug.WriteLine("   type:" + md.type);
 			//Debug.WriteLine("operate:" + md.operate);
@@ -55,9 +56,13 @@ namespace toIconCom.control {
 			//}
 			//Debug.WriteLine("aaa:" + str);
 
-			if(md.help || args.Length == 0) {
+			if (md.help || args.Length == 0) {
 				Console.WriteLine(getHelp(parser));
 				return;
+			}
+
+			if (md.version) {
+				Console.WriteLine("ctoIcon.exe v" + ComSysConst.version);
 			}
 
 			try {
@@ -90,6 +95,7 @@ namespace toIconCom.control {
 					case "type": return Lang.ins.langHelpType;
 					case "operate": return Lang.ins.langHelpOperate;
 					case "bppSize": return Lang.ins.langHelpBppSize;
+					case "version": return Lang.ins.langHelpVersion;
 					case "help": return Lang.ins.langHelpHelp;
 					default: return it.attr.desc;
 				}
