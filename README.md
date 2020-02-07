@@ -66,4 +66,4 @@ ctoIcon.exe [-s][-d][-t][-o][-b][-h]
 
 GPL-3.0
 
-[https://github.com/xxxxst/totIcon/blob/master/LICENSE.txt](https://github.com/xxxxst/totIcon/blob/master/LICENSE.txt)
+[https://github.com/xxxxst/toIcon/blob/master/LICENSE.txt](https://github.com/xxxxst/toIcon/blob/master/LICENSE.txt)
