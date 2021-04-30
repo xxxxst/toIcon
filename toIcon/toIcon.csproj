@@ -16,6 +16,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -60,7 +75,7 @@
     <ApplicationIcon>resource\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>toIcon.App</StartupObject>
+    <StartupObject>toIcon.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=3.3.3.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
@@ -90,6 +105,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\LocalRes.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="sdk\csharpHelp\ButtonLabel\ButtonLabel.cs" />
     <Compile Include="sdk\csharpHelp\CheckBoxBan\CheckBoxBan.cs" />
     <Compile Include="sdk\csharpHelp\ClassLink.cs" />
@@ -108,6 +124,7 @@
     <Compile Include="sdk\csharpHelp\ListCtl.cs" />
     <Compile Include="sdk\csharpHelp\miniButton\MiniButton.cs" />
     <Compile Include="sdk\csharpHelp\MultiAsyn.cs" />
+    <Compile Include="sdk\csharpHelp\RegistryCtl.cs" />
     <Compile Include="sdk\csharpHelp\SingleEvent.cs" />
     <Compile Include="sdk\csharpHelp\StringReplace.cs" />
     <Compile Include="sdk\csharpHelp\TableCtl.cs" />
@@ -130,6 +147,9 @@
     <Compile Include="sdk\csharpHelp\XmlSerialize.cs" />
     <Compile Include="view\Popwin.xaml.cs">
       <DependentUpon>Popwin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\SettingWin.xaml.cs">
+      <DependentUpon>SettingWin.xaml</DependentUpon>
     </Compile>
     <Page Include="sdk\csharpHelp\ButtonLabel\ButtonLabel.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -183,6 +203,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\SettingWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\style\ComStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -226,7 +250,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
     <Resource Include="resource\icon.ico" />
@@ -238,9 +268,6 @@
       <Name>toIconCom</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="resource\icon16.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -250,8 +277,7 @@
     <Error Condition="!Exists('..\packages\Fody.4.2.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.4.2.1\build\Fody.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(SolutionDir)toIconCom\sdk\freeImage\x32\*" "$(TargetDir)"
-xcopy /y /d "$(SolutionDir)ctoIcon\bin\x86\$(ConfigurationName)\ctoIcon.exe" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(SolutionDir)toIconCom\sdk\freeImage\x32\*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets') AND '$(Configuration)' == 'Release'" />
 </Project>

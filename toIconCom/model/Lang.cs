@@ -2,32 +2,53 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace toIconCom.model {
 	public class Lang {
 		public static readonly Lang ins = new Lang();
 
+		public string nowLang = "";
+		Dictionary<string, Action> funLang = new Dictionary<string, Action>();
+
+		public List<string> lstLang = new List<string>() {
+			"自动", "",
+			"English", "en-US",
+			"简体中文", "zh-CN",
+		};
+
 		public Lang() {
-			//if(IsSimpleChinese()) {
-			//	return;
-			//}
+			funLang[""] = setEn;
+			funLang["en-US"] = setEn;
+			funLang["zh-CN"] = setZhCn;
 
-			switch(getLang()) {
-				case "zh-CN": cvtSimpleChinese(); break;
-				default: cvtEnglish(); break;
+			setLang("");
+		}
+
+		public void setLang(string lang) {
+			if (lang == nowLang) {
+				return;
 			}
+			nowLang = lang;
+
+			// auto language
+			if (lang == "") {
+				lang = Thread.CurrentThread.CurrentCulture.Name;
+			}
+
+			// lang not exist
+			if (!funLang.ContainsKey(lang)) {
+				lang = "";
+			}
+
+			funLang[lang]();
+
+			lstLang[0] = langAuto;
 		}
 
-		private string getLang() {
-			return System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-		}
-
-		//public static bool IsSimpleChinese() {
-		//	return System.Threading.Thread.CurrentThread.CurrentCulture.Name == "zh-CN";
-		//}
-
-		private void cvtEnglish() {
+		private void setEn() {
+			langAppName = "toIcon";
 			langSetting = "Setting";
 			langBpp = " Bpp";
 			langExportMulti = "Export Multi";
@@ -45,9 +66,17 @@ namespace toIconCom.model {
 			langWhenFileExist = "File Exist:";
 			langOutType = "Out Type";
 			langAuto = "Auto";
+			langAutoDesc = "Auto：ico to png, image to ico, orther to png";
 			langMergeOutput = "Merge Output";
 			langMerge = "Merge";
 			langIcoValid = "Valid when the output format is ICO";
+			langMoreSetting = "More";
+
+			langRegFile = "Reg to File";
+			langRegDir = "Reg to folder";
+			langUnRegFile = "Unreg to File";
+			langUnRegDir = "Unreg to folder";
+			langLanguage = "Language";
 
 			langHelpSrc = "multiple source file. file1 file2 ...";
 			langHelpDst = "out file directory, output to source directory if is empty";
@@ -55,10 +84,12 @@ namespace toIconCom.model {
 			langHelpOperate = "operate when file exist\r\noptional: rename,jump,overwrite\r\ndefault is rename";
 			langHelpBppSize = "size and bpp, multiple out split by ';', bpp can be ignore\r\nusage: [size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48,32";
 			langHelpMergeOutput = "merge output, Valid when the output format is ICO";
+			langHelpVersion = "version";
 			langHelpHelp = "help";
 		}
 
-		private void cvtSimpleChinese() {
+		private void setZhCn() {
+			langAppName = "toIcon";
 			langSetting = "设置";
 			langBpp = "位";
 			langExportMulti = "导出多个";
@@ -76,9 +107,17 @@ namespace toIconCom.model {
 			langWhenFileExist = "文件存在时：";
 			langOutType = "输出格式";
 			langAuto = "自动";
+			langAutoDesc = "自动：ico转png，图片转ico，其他转png";
 			langMergeOutput = "合并输出";
 			langMerge = "合并";
 			langIcoValid = "输出格式为ico时有效";
+			langMoreSetting = "更多设置";
+
+			langRegFile = "注册到文件";
+			langRegDir = "注册到目录背景";
+			langUnRegFile = "取消注册到文件";
+			langUnRegDir = "取消注册到目录背景";
+			langLanguage = "语言";
 
 			langHelpSrc = "源文件或目录路径。file1 file2 ...";
 			langHelpDst = "输出目录，如果为空则输出到源文件目录";
@@ -86,34 +125,16 @@ namespace toIconCom.model {
 			langHelpOperate = "输出文件存在时的操作\r\n可选项：rename,jump,overwrite\r\n为默认值rename";
 			langHelpBppSize = "尺寸和bpp，多个输出用';'分割，bpp可忽略\r\n用法：[size1],[bpp1?];[size2]...\r\n例： 48,32;24,16;64\r\n默认为 48,32";
 			langHelpMergeOutput = "合并输出，输出格式为ico时有效";
+			langHelpVersion = "版本号";
 			langHelpHelp = "帮助";
+
 		}
 
-		//public string langSetting = "Setting";
-		//public string langBpp = " Bpp";
-		//public string langExportMulti = "Export Multi";
-		//public string langDragImageHere = "Drag Image Here";
-		//public string langOk = "Ok";
+		public static bool IsSimpleChinese() {
+			return Thread.CurrentThread.CurrentCulture.Name == "zh-CN";
+		}
 
-		//public string langStrPopWin1 = "File<";
-		//public string langStrPopWin2 = "> exist，sure to replace？";
-
-		//public string langReplace = "Replace";
-		//public string langReplaceAll = "Replace All";
-		//public string langJump = "Jump";
-		//public string langCancel = "Cancel";
-		//public string langRename = "Rename";
-		//public string langWhenFileExist = "When File Exist:";
-		//public string langOutType = "Out Type";
-		//public string langAuto = "Auto";
-
-		//public string langHelpSrc = "multiple source file. file1 file2 ...";
-		//public string langHelpDst = "out file directory, output to source directory if is empty";
-		//public string langHelpType = "out file type\r\noptional: auto,ico,bmp,jpg,png. default is auto:\r\nout png if src is ico\r\nout ico if src is image\r\nout png if src is orther file";
-		//public string langHelpOperate = "operate when file exist\r\noptional:rename,jump,overwrite\r\ndefault is rename";
-		//public string langHelpBppSize = "size and bpp, multiple out split by ';', bpp can be ignore\r\nusage: [size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48";
-		//public string langHelpHelp = "help";
-
+		public string langAppName = "toIcon";
 		public string langSetting = "设置";
 		public string langBpp = "位";
 		public string langExportMulti = "导出多个";
@@ -131,9 +152,17 @@ namespace toIconCom.model {
 		public string langWhenFileExist = "文件存在时：";
 		public string langOutType = "输出格式";
 		public string langAuto = "自动";
+		public string langAutoDesc = "自动：ico转png，图片转ico，其他转png";
 		public string langMergeOutput = "合并输出";
 		public string langMerge = "合并";
 		public string langIcoValid = "输出格式为ico时有效";
+		public string langMoreSetting = "更多设置";
+
+		public string langRegFile = "注册到文件";
+		public string langRegDir = "注册到目录背景";
+		public string langUnRegFile = "取消注册到文件";
+		public string langUnRegDir = "取消注册到目录背景";
+		public string langLanguage = "语言";
 
 		public string langHelpSrc = "源文件或目录路径。file1 file2 ...";
 		public string langHelpDst = "输出目录，如果为空则输出到源文件目录";
@@ -141,6 +170,7 @@ namespace toIconCom.model {
 		public string langHelpOperate = "输出文件存在时的操作\r\n可选项：rename,jump,overwrite\r\n为默认值rename";
 		public string langHelpBppSize = "尺寸和bpp，多个输出用';'分割，bpp可忽略\r\n用法：[size1],[bpp1?];[size2]...\r\n例： 48,32;24,16;64\r\n默认为 48,32";
 		public string langHelpMergeOutput = "合并输出，输出格式为ico时有效";
+		public string langHelpVersion = "版本号";
 		public string langHelpHelp = "帮助";
 	}
 }

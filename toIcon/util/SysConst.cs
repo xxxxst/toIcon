@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace toIcon.util {
 	public class SysConst {
+		public static string exePath() {
+			return rootPath() + AppDomain.CurrentDomain.FriendlyName;
+		}
+
 		public static string rootPath() {
 			return AppDomain.CurrentDomain.BaseDirectory;
 		}

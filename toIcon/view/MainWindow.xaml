@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:toIcon.view"
 		xmlns:supUI="clr-namespace:csharpHelp.ui"
         mc:Ignorable="d"
-        Title="toIcon" Height="230" Width="500" AllowDrop="True" DragOver="Window_DragOver" DragEnter="Window_DragEnter" Drop="Window_Drop" ResizeMode="CanMinimize" Closed="Window_Closed">
+        Title="toIcon" Height="230" Width="530" AllowDrop="True" DragOver="Window_DragOver" DragEnter="Window_DragEnter" Drop="Window_Drop" ResizeMode="NoResize" Closed="Window_Closed">
 	<Grid Background="Transparent" Name="grdMain">
 
 		<Grid Margin="8,4" Visibility="Visible" Name="grdBox">
@@ -118,14 +118,17 @@
 				</Grid.ColumnDefinitions>
 				<!--<CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>-->
 				<Label Grid.Column="0" Margin="0,0,0,0" Padding="0" Content="输出格式" Name="lblOutType"/>
-				<ComboBox Grid.Column="1" Margin="5,0,0,0" Width="60" Height="24" Name="cbxOutType"/>
+				<ComboBox Grid.Column="1" Margin="5,0,0,0" Width="60" Height="24" Name="cbxOutType" ToolTip="自动：ico转png，图片转ico，其他转png"/>
 
 				<Label Grid.Column="2" Margin="5,0,0,0" Padding="0" Content="文件存在时" Name="lblWhenFileExist"/>
 				<ComboBox Grid.Column="3" Margin="5,0,0,0" Width="80" Height="24" Name="cbxOperate"/>
 
 				<supUI:CheckBoxBan Grid.Column="4" Margin="5,0,0,0" Padding="0" Height="24" Content="合并输出" ToolTip="输出格式为ico时有效" Background="Transparent" VerticalContentAlignment="Center" x:Name="chkMergeOutput"/>
 
-				<supUI:MiniButton Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+				<StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right">
+					<supUI:MiniButton HorizontalAlignment="Right" VerticalAlignment="Center" Width="60" Height="25" Radius="5" Margin="0,0,5,0" Content="更多设置" x:Name="btnMoreSetting" Click="BtnMoreSetting_Click"/>
+					<supUI:MiniButton HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+				</StackPanel>
 			</Grid>
 		</Grid>
 

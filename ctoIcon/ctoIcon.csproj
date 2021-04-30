@@ -99,7 +99,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(SolutionDir)toIconCom\sdk\freeImage\x32\*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(SolutionDir)toIconCom\sdk\freeImage\x32\*" "$(TargetDir)"
+xcopy /y /d "$(TargetPath)" "$(SolutionDir)toIcon\bin\x86\$(ConfigurationName)\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

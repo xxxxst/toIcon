@@ -7,25 +7,32 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace csharpHelp {
+	public enum LinkType {
+		Public, All, Private
+	}
+
 	public class ClassLink {
 		public object from { get; set; } = null;
 		public object to { get; set; } = null;
 		public string classTargetName { get; set; } = "";
+		public LinkType type { get; set; } = LinkType.Public;
 
 		public ClassLink() {
 
 		}
 
-		public ClassLink(object _from, object _to, string _classTargetName = "") {
+		public ClassLink(object _from, object _to, string _classTargetName = "", LinkType _type = LinkType.Public) {
 			from = _from;
 			to = _to;
 			classTargetName = _classTargetName;
+			type = _type;
 		}
 
-		public void sendTo(object _from, object _to, string _classTargetName = "") {
+		public void sendTo(object _from, object _to, string _classTargetName = "", LinkType _type = LinkType.Public) {
 			from = _from;
 			to = _to;
 			classTargetName = _classTargetName;
+			type = _type;
 
 			_sendTo(from);
 		}
@@ -34,22 +41,32 @@ namespace csharpHelp {
 			_sendTo(from);
 		}
 
+		private BindingFlags getFlag() {
+			switch (type) {
+				case LinkType.Private: return BindingFlags.NonPublic | BindingFlags.Instance;
+				case LinkType.All: return BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+				case LinkType.Public: default: return BindingFlags.Public | BindingFlags.Instance;
+			}
+		}
+
 		private void _sendTo(object subData) {
 			Type type = subData.GetType();
 
-			var arrFields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
-			var arrProps = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+			BindingFlags bindFlag = getFlag();
+
+			var arrFields = type.GetFields(bindFlag);
+			var arrProps = type.GetProperties(bindFlag);
 			MemberInfo[] arr = arrFields.Cast<MemberInfo>().Concat(arrProps).ToArray();
 
-			foreach(var mi in arr) {
+			foreach (var mi in arr) {
 
-				if(!mi.IsDefined(typeof(Bridge), false)) {
+				if (!mi.IsDefined(typeof(Bridge), false)) {
 					continue;
 				}
 
 				var arrBrg = mi.GetCustomAttributes<Bridge>();
-				foreach(var brg in arrBrg) {
-					if(brg.classTargetName != classTargetName) {
+				foreach (var brg in arrBrg) {
+					if (brg.classTargetName != classTargetName) {
 						continue;
 					}
 
@@ -57,24 +74,35 @@ namespace csharpHelp {
 					object dataTemp = to;
 
 					string[] arrPath = path.Split('.');
-					if(arrPath.Length <= 0) {
+					if (arrPath.Length <= 0) {
 						continue;
 					}
 
-					for(int i = 0; i < arrPath.Length - 1; ++i) {
+					bool nofound = false;
+					for (int i = 0; i < arrPath.Length - 1; ++i) {
 						string str = arrPath[i];
-						var member = dataTemp.GetType().GetMember(str).First();
-						if(member == null) {
+						var member = dataTemp.GetType().GetMember(str, bindFlag).FirstOrDefault();
+						if (member == null) {
+							nofound = true;
 							break;
 						}
 						dataTemp = getMemberValue(member, dataTemp);
 					}
+					if (nofound) {
+						continue;
+					}
 
-					var memberLast = dataTemp.GetType().GetMember(arrPath.Last()).First();
+					var memberLast = dataTemp.GetType().GetMember(arrPath.Last(), bindFlag).FirstOrDefault();
 
 					object val = getMemberValue(mi, subData);
-					val = Convert.ChangeType(val, getMemberValue(memberLast, dataTemp).GetType());
-					setMemberValue(memberLast, dataTemp, val);
+					try {
+						var newVal = Convert.ChangeType(val, getMemberValue(memberLast, dataTemp).GetType());
+						setMemberValue(memberLast, dataTemp, newVal);
+					} catch (Exception) {
+						try {
+							setMemberValue(memberLast, dataTemp, val);
+						} catch (Exception) { }
+					}
 
 					//Debug.WriteLine("cc:" + val.GetType() + "," + path + "," + getMemberValue(mi, data));
 				}
@@ -88,14 +116,16 @@ namespace csharpHelp {
 		private void _sendBack(object subData) {
 			Type type = subData.GetType();
 
-			var arrFields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
-			var arrProps = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+			BindingFlags bindFlag = getFlag();
+
+			var arrFields = type.GetFields(bindFlag);
+			var arrProps = type.GetProperties(bindFlag);
 			MemberInfo[] arr = arrFields.Cast<MemberInfo>().Concat(arrProps).ToArray();
 
-			foreach(var mi in arr) {
+			foreach (var mi in arr) {
 				object val = getMemberValue(mi, subData);
 
-				if(!mi.IsDefined(typeof(Bridge), false)) {
+				if (!mi.IsDefined(typeof(Bridge), false)) {
 					continue;
 				}
 
@@ -104,8 +134,8 @@ namespace csharpHelp {
 				//}
 
 				var arrBrg = mi.GetCustomAttributes<Bridge>();
-				foreach(var brg in arrBrg) {
-					if(brg.classTargetName != classTargetName) {
+				foreach (var brg in arrBrg) {
+					if (brg.classTargetName != classTargetName) {
 						continue;
 					}
 
@@ -113,23 +143,34 @@ namespace csharpHelp {
 					object dataTemp = to;
 
 					string[] arrPath = path.Split('.');
-					if(arrPath.Length <= 0) {
+					if (arrPath.Length <= 0) {
 						continue;
 					}
 
 					//MemberInfo mi = dataTemp.GetType().GetMember(arrPath[0]);
 
-					for(int i = 0; i < arrPath.Length; ++i) {
+					bool nofound = false;
+					for (int i = 0; i < arrPath.Length; ++i) {
 						string str = arrPath[i];
-						var member = dataTemp.GetType().GetMember(str).First();
-						if(member == null) {
+						var member = dataTemp.GetType().GetMember(str, bindFlag).FirstOrDefault();
+						if (member == null) {
+							nofound = true;
 							break;
 						}
 						dataTemp = getMemberValue(member, dataTemp);
 					}
+					if (nofound) {
+						continue;
+					}
 
-					dataTemp = Convert.ChangeType(dataTemp, val.GetType());
-					setMemberValue(mi, subData, dataTemp);
+					try {
+						var newDataTemp = Convert.ChangeType(dataTemp, val.GetType());
+						setMemberValue(mi, subData, newDataTemp);
+					} catch (Exception) {
+						try {
+							setMemberValue(mi, subData, dataTemp);
+						} catch (Exception) { }
+					}
 					//Debug.WriteLine("cc:" + val.GetType() + "," + path + "," + getMemberValue(mi, data));
 				}
 
@@ -138,18 +179,18 @@ namespace csharpHelp {
 		}
 
 		private void setMemberValue(MemberInfo mi, object data, object value) {
-			if(mi.MemberType == MemberTypes.Field) {
+			if (mi.MemberType == MemberTypes.Field) {
 				(mi as FieldInfo).SetValue(data, value);
-			} else if(mi.MemberType == MemberTypes.Property) {
+			} else if (mi.MemberType == MemberTypes.Property) {
 				(mi as PropertyInfo).SetValue(data, value);
 			}
 		}
 
 		private object getMemberValue(MemberInfo mi, object data) {
 			object rst = null;
-			if(mi.MemberType == MemberTypes.Field) {
+			if (mi.MemberType == MemberTypes.Field) {
 				rst = (mi as FieldInfo).GetValue(data);
-			} else if(mi.MemberType == MemberTypes.Property) {
+			} else if (mi.MemberType == MemberTypes.Property) {
 				rst = (mi as PropertyInfo).GetValue(data);
 			} else {
 				return null;
@@ -170,5 +211,5 @@ namespace csharpHelp {
 			classTargetName = _classTargetName;
 		}
 	}
-	
+
 }

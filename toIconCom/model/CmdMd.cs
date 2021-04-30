@@ -51,6 +51,9 @@ namespace toIconCom.model {
 		[CmdAttr("merge", "m", "merge output, Valid when the output format is ICO")]
 		public bool merge = false;
 
+		[CmdAttr("version", "v", "version")]
+		public bool version = false;
+
 		[CmdAttr("help", "h", "help")]
 		public bool help = false;
 	}

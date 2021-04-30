@@ -144,8 +144,10 @@ namespace toIconCom.control {
 				string dir = Path.GetDirectoryName(path) + "/";
 				if(dstDir != "") {
 					dir = dstDir + "/";
+					Directory.CreateDirectory(dir);
+
 				}
-				Directory.CreateDirectory(dir);
+
 
 				string outSuffix = getOutFileSuffix(suffix, outType);
 

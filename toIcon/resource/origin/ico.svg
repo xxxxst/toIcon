@@ -14,11 +14,11 @@
    viewBox="0 0 4 4"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="ico.svg"
-   inkscape:export-filename="E:\00workself\csharp\project\toIcon\toIcon\resource\icon163.png"
-   inkscape:export-xdpi="24"
-   inkscape:export-ydpi="24">
+   inkscape:export-filename="E:\00workself\csharp\project\toIcon\toIcon\resource\icon.png"
+   inkscape:export-xdpi="72"
+   inkscape:export-ydpi="72">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -28,11 +28,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.9999998"
-     inkscape:cx="23.875164"
-     inkscape:cy="47.959412"
+     inkscape:zoom="7.9999996"
+     inkscape:cx="30.206034"
+     inkscape:cy="29.430265"
      inkscape:document-units="px"
-     inkscape:current-layer="g982"
+     inkscape:current-layer="layer6"
      inkscape:showpageshadow="false"
      showgrid="false"
      inkscape:snap-nodes="false"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -167,7 +167,7 @@
     </g>
   </g>
   <g
-     style="display:inline;opacity:1"
+     style="display:none;opacity:1"
      id="g984"
      inkscape:groupmode="layer"
      inkscape:label="Layer 6">
@@ -211,5 +211,16 @@
        id="path839"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="Layer 9">
+    <path
+       style="fill:#f47b4e;fill-opacity:1;stroke:none;stroke-width:0.0625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.0965957,2.6626908 1.5494491,1.0776684 2.0387921,1.9402533 2.5180894,1.5760538 2.9034043,2.6626908 Z"
+       id="path844"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
   </g>
 </svg>
