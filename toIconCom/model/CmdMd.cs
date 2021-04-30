@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace toIconCom.model {
-	[CmdRoot("ctoIcon.exe [-s][-d][-t][-o][-b][-h]")]
+	[CmdRoot("ctoIcon.exe [-s][-d][-t][-o][-b][-m][-h]")]
 	public class CmdMd {
 
 		//[CmdSingle("eee", "eeeeee")]
@@ -47,6 +47,9 @@ namespace toIconCom.model {
 
 		[CmdAttr("bppSize", "b", "size and bpp, multiple out split by ';', bpp can be ignore\r\nusage: [size1],[bpp1];[size2]...\r\ne.g. 48,32;24,16;64\r\ndefault is 48")]
 		public string bppSize = "";
+
+		[CmdAttr("merge", "m", "merge output, Valid when the output format is ICO")]
+		public bool merge = false;
 
 		[CmdAttr("help", "h", "help")]
 		public bool help = false;

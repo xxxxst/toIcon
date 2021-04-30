@@ -16,14 +16,6 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="35"/>
 			</Grid.RowDefinitions>
-			<!--<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="70"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>-->
 
 			<Border BorderBrush="#000" BorderThickness="0,0,0,1"/>
 			<Grid Grid.Row="0">
@@ -121,16 +113,19 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<!--<CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="chkAutoRename" Content="自动重命名"/>-->
-				<Label Grid.Column="0" Margin="5,0,0,0" Content="输出格式" Name="lblOutType"/>
-				<ComboBox Grid.Column="1" Margin="5,0,0,0" Width="80" Height="24" Name="cbxOutType"/>
-				
-				<Label Grid.Column="2" Margin="5,0,0,0" Content="文件存在时" Name="lblWhenFileExist"/>
+				<Label Grid.Column="0" Margin="0,0,0,0" Padding="0" Content="输出格式" Name="lblOutType"/>
+				<ComboBox Grid.Column="1" Margin="5,0,0,0" Width="60" Height="24" Name="cbxOutType"/>
+
+				<Label Grid.Column="2" Margin="5,0,0,0" Padding="0" Content="文件存在时" Name="lblWhenFileExist"/>
 				<ComboBox Grid.Column="3" Margin="5,0,0,0" Width="80" Height="24" Name="cbxOperate"/>
-				
-				<supUI:MiniButton Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
+
+				<supUI:CheckBoxBan Grid.Column="4" Margin="5,0,0,0" Padding="0" Height="24" Content="合并输出" ToolTip="输出格式为ico时有效" Background="Transparent" VerticalContentAlignment="Center" x:Name="chkMergeOutput"/>
+
+				<supUI:MiniButton Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25" Radius="5" Content="确定" x:Name="btnOk" Click="BtnOk_Click"/>
 			</Grid>
 		</Grid>
 
@@ -150,53 +145,26 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 				<!--<Label Grid.Column="0" Margin="0,0,5,0" Content="文件存在时" Padding="0" FontSize="11" Name="lblWhenFileExist2"/>-->
-				<Label Grid.Column="0" Content="" Padding="0" FontSize="11" Name="lblShowOutType"/>
-				<Label Grid.Column="1" Content=" | " Padding="0" FontSize="11"/>
-				<Label Grid.Column="2" Content="" Padding="0" FontSize="11" Name="lblShowOperate"/>
-				<Label Grid.Column="3" Content=" | " Padding="0" FontSize="11"/>
-				<Label Grid.Column="4" Content="" Padding="0" FontSize="11" Name="lblVersion"/>
+
+				<StackPanel Grid.Column="0" Orientation="Horizontal">
+					<Label Content="" Padding="0" FontSize="11" Name="lblShowOutType"/>
+					<Label Content=" | " Padding="0" FontSize="11"/>
+				</StackPanel>
+				<StackPanel Grid.Column="1" Orientation="Horizontal">
+					<Label Content="" Padding="0" FontSize="11" Name="lblShowOperate"/>
+					<Label Content=" | " Padding="0" FontSize="11"/>
+				</StackPanel>
+				<StackPanel Grid.Column="2" Orientation="Horizontal" Name="stkMergeOutput">
+					<Label Content="合并" Padding="0" FontSize="11" Name="lblMerge"/>
+					<Label Content=" | " Padding="0" FontSize="11"/>
+				</StackPanel>
+				<StackPanel Grid.Column="3" Orientation="Horizontal">
+					<Label Content="" Padding="0" FontSize="11" Name="lblVersion"/>
+				</StackPanel>
 			</Grid>
 		</Grid>
 
-		<!--<Grid Margin="8" Visibility="Visible" Name="grdBox">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="28"/>
-				<RowDefinition Height="130"/>
-				<RowDefinition Height="130"/>
-				<RowDefinition Height="130"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="50"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-
-			<Grid Grid.Row="0" Grid.ColumnSpan="999" Background="Transparent" Name="grdBackRow"/>
-			<Grid Grid.Column="0" Grid.RowSpan="999" Background="Transparent" Name="grdBackCol"/>
-
-			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="32位"/>
-			<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="16位"/>
-			<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="8位"/>
-
-			<Grid Grid.ColumnSpan="999" Background="#000" Height="1" VerticalAlignment="Bottom"/>
-			<Grid Grid.RowSpan="999" Background="#000" Width="1" HorizontalAlignment="Right"/>
-		</Grid>
-
-		<Grid Margin="8,0,8,8" Visibility="Collapsed" Name="grdMini">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="24"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-
-			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="abc" Padding="0" Name="lblMiniDesc"/>
-
-			<Grid Grid.ColumnSpan="999" Background="#000" Height="1" VerticalAlignment="Bottom"/>
-
-			<local:ImageBox Grid.Row="1" Grid.ColumnSpan="2" Margin="0,2,0,0" Cursor="Arrow" IsMiniMode="True" x:Name="imgBox" OnClickMiniMode="ImgBox_OnClickMiniMode"/>
-		</Grid>-->
-		
-    </Grid>
+	</Grid>
 </Window>

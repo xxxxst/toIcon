@@ -68,6 +68,9 @@ namespace toIcon.view {
 			lblDragImage.Content = Lang.ins.langDragImageHere;
 			lblOutType.Content = Lang.ins.langOutType;
 			lblWhenFileExist.Content = Lang.ins.langWhenFileExist;
+			chkMergeOutput.Content = Lang.ins.langMergeOutput;
+			chkMergeOutput.ToolTip = Lang.ins.langIcoValid;
+			lblMerge.Content = Lang.ins.langMerge;
 			//lblWhenFileExist2.Content = Lang.ins.langWhenFileExist;
 			btnOk.Content = Lang.ins.langOk;
 
@@ -143,7 +146,7 @@ namespace toIcon.view {
 				}
 
 				str = parser["config"]["checked"];
-				string[] arr = str.Split(';');
+				string[] arr = str.Split('$');
 				for(int i = 0; i < arr.Length; ++i) {
 					var tmp = arr[i].Split(',');
 					if(tmp.Length < 2) {
@@ -178,6 +181,13 @@ namespace toIcon.view {
 				}
 				cbxOperate.SelectedIndex = operate;
 				lblShowOperate.Content = cbxOperate.Items[operate].ToString();
+
+				// merge output
+				str = parser["config"]["mergeOutput"];
+				int.TryParse(str, out int mergeOutput);
+				chkMergeOutput.IsChecked = (mergeOutput != 0);
+				stkMergeOutput.Visibility = (chkMergeOutput.IsChecked == true ? Visibility.Visible : Visibility.Collapsed);
+
 			} catch(Exception ex) { Debug.WriteLine(ex); }
 		}
 
@@ -199,13 +209,14 @@ namespace toIcon.view {
 						if(arrCheckBox[i][j].IsChecked != true) {
 							continue;
 						}
-						if(str != "") { str += ";"; }
+						if(str != "") { str += "$"; }
 						str += i + "," + j;
 					}
 				}
 				parser["config"]["checked"] = str;
 				parser["config"]["outType"] = "" + cbxOutType.SelectedIndex;
 				parser["config"]["operate"] = "" + cbxOperate.SelectedIndex;
+				parser["config"]["mergeOutput"] = (chkMergeOutput.IsChecked == true ? "1" : "0");
 
 				parser.save();
 			} catch(Exception ex) { Debug.WriteLine(ex); }
@@ -297,8 +308,9 @@ namespace toIcon.view {
 			string bppSize = getBppSizeStr();
 			string outType = getOutType();
 			string operate = getOperateStr();
+			bool isMergeOutput = (chkMergeOutput.IsChecked == true);
 
-			iconCtl.convert(srcMultiPath, "", bppSize, outType, operate);
+			iconCtl.convert(srcMultiPath, "", bppSize, outType, operate, isMergeOutput);
 			return;
 
 			//if(!File.Exists(srcPath)) {
@@ -532,6 +544,8 @@ namespace toIcon.view {
 				lblShowOperate.Content = cbxOperate.Items[cbxOperate.SelectedIndex].ToString();
 			}
 
+			stkMergeOutput.Visibility = (chkMergeOutput.IsChecked == true ? Visibility.Visible : Visibility.Collapsed);
+
 			string checkedSize = "48*48 | 32" + Lang.ins.langBpp;
 			int checkedCount = 0;
 			for(int i = 0; i < lstSize.Length; ++i) {
@@ -565,5 +579,6 @@ namespace toIcon.view {
 		private void BtnSetting_Click(object sender, RoutedEventArgs e) {
 			setMiniMode(false);
 		}
+
 	}
 }

@@ -61,7 +61,7 @@ namespace toIconCom.control {
 			}
 
 			try {
-				(new IconCtl()).convert(md.srcPath.ToArray(), md.dstDir, md.bppSize, md.type, md.operate);
+				(new IconCtl()).convert(md.srcPath.ToArray(), md.dstDir, md.bppSize, md.type, md.operate, md.merge);
 			} catch(Exception ex) {
 				Console.WriteLine("Failed");
 				Console.WriteLine(ex.ToString());
@@ -90,6 +90,7 @@ namespace toIconCom.control {
 					case "type": return Lang.ins.langHelpType;
 					case "operate": return Lang.ins.langHelpOperate;
 					case "bppSize": return Lang.ins.langHelpBppSize;
+					case "merge": return Lang.ins.langMergeOutput;
 					case "help": return Lang.ins.langHelpHelp;
 					default: return it.attr.desc;
 				}

@@ -20,6 +20,18 @@ namespace toIconCom.control {
 		Jump, Rename, Overwrite, Cancel,
 	}
 
+	public class DibMd : IDisposable {
+		public FIBITMAP dib;
+
+		public DibMd(FIBITMAP _dib) {
+			dib = _dib;
+		}
+
+		public void Dispose() {
+			FreeImage.Unload(dib);
+		}
+	}
+
 	public class IconCtl {
 		//[DllImport("User32.dll")]
 		//public static extern int PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, int[] piconid, int nIcons, int flags);
@@ -58,7 +70,7 @@ namespace toIconCom.control {
 		//	}
 		//}
 
-		public string convert(string[] srcMultiPath, string dstDir, string multiSizeBpp, string outType = "auto", string operate = "rename") {
+		public string convert(string[] srcMultiPath, string dstDir, string multiSizeBpp, string outType = "auto", string operate = "rename", bool mergeOutput = false) {
 			string rstInfo = "Success";
 
 			//HashSet<int> hsIconSize = new HashSet<int>();
@@ -122,28 +134,49 @@ namespace toIconCom.control {
 			//	}
 			//}
 
-			for(int i = 0; i < lstIcoSize.Count; ++i) {
-				for(int j = 0; j < srcMultiPath.Length; ++j) {
-					string path = srcMultiPath[j];
+			for(int j = 0; j < srcMultiPath.Length; ++j) {
+				List<DibMd> lstData = new List<DibMd>();
+				string path = srcMultiPath[j];
+				if(!File.Exists(path) && !Directory.Exists(path)) {
+					continue;
+				}
+				string suffix = Path.GetExtension(path).ToLower();
+				string dir = Path.GetDirectoryName(path) + "/";
+				if(dstDir != "") {
+					dir = dstDir + "/";
+				}
+				Directory.CreateDirectory(dir);
+
+				string outSuffix = getOutFileSuffix(suffix, outType);
+
+				// 只有输出格式ico的才能合并输出
+				bool realMergeOutput = mergeOutput;
+				if(outSuffix != ".ico") {
+					realMergeOutput = false;
+				}
+
+				string mergeDstPath = dir + Path.GetFileNameWithoutExtension(path) + outSuffix;
+				if(realMergeOutput) {
+					if(File.Exists(mergeDstPath)) {
+						switch(operate) {
+							case "jump": continue;
+							case "overwrite": break;
+							case "cancel": return "Cancel";
+							case "rename": default: mergeDstPath = renameDstFileName(mergeDstPath); break;
+						}
+					}
+				}
+
+				for(int i = 0; i < lstIcoSize.Count; ++i) {
 					//if(Directory.Exists(path)) {
 					//	continue;
 					//}
-					if(!File.Exists(path) && !Directory.Exists(path)) {
-						continue;
-					}
-					string suffix = Path.GetExtension(path).ToLower();
-					string dir = Path.GetDirectoryName(path) + "/";
-					if(dstDir != "") {
-						dir = dstDir + "/";
-					}
-					Directory.CreateDirectory(dir);
 
 					string fname = Path.GetFileNameWithoutExtension(path);
-					if(!isDefaultIcon(lstIcoSize[i], lstIcoBpp[i])) {
+					if(!realMergeOutput && !isDefaultIcon(lstIcoSize[i], lstIcoBpp[i])) {
 						fname = $"{fname}_{lstIcoSize[i]}_{lstIcoBpp[i]}";
 					}
 
-					string outSuffix = getOutFileSuffix(suffix, outType);
 					string dstPath = dir + fname + outSuffix;
 					if(File.Exists(dstPath)) {
 						switch(operate) {
@@ -153,11 +186,37 @@ namespace toIconCom.control {
 							case "rename": default: dstPath = renameDstFileName(dstPath); break;
 						}
 					}
-					//Debug.WriteLine(path + "," + dstPath + "," + lstIcoSize[i] + "," + lstIcoBpp[i]);
-					convert(path, dstPath, lstIcoSize[i], lstIcoBpp[i]);
-					//if(hsImageSuffix.Contains(suffix)) {
+					//convert(path, dstPath, lstIcoSize[i], lstIcoBpp[i]);
 
-					//}
+					try {
+						DibMd md = loadFile(path, lstIcoSize[i]);
+						DibMd outMd = formatOutput(md, lstIcoSize[i], lstIcoBpp[i]);
+
+						md?.Dispose();
+						if(outMd == null) {
+							continue;
+						}
+
+						if(realMergeOutput) {
+							lstData.Add(outMd);
+						} else {
+							save(outMd, dstPath);
+						}
+					} catch(Exception) { }
+				}
+
+				// 合并输出
+				if(realMergeOutput && lstData.Count > 0) {
+					try {
+						FIMULTIBITMAP fmb = FreeImage.OpenMultiBitmap(FREE_IMAGE_FORMAT.FIF_ICO, mergeDstPath, true, false, false, FREE_IMAGE_LOAD_FLAGS.ICO_MAKEALPHA);
+
+						for(var i = 0; i < lstData.Count; ++i) {
+							FreeImage.AppendPage(fmb, lstData[i].dib);
+							lstData[i].Dispose();
+						}
+						lstData.Clear();
+						FreeImage.CloseMultiBitmapEx(ref fmb, FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE);
+					} catch(Exception) { }
 				}
 			}
 
@@ -215,7 +274,100 @@ namespace toIconCom.control {
 
 		//}
 
-		public void convert(string srcPath, string dstPath, int icoSize, int bpp) {
+		private DibMd loadFile(string srcPath, int icoSize) {
+			string srcSuffix = Path.GetExtension(srcPath).ToLower();
+
+			FIBITMAP dib;
+			try {
+				switch(srcSuffix) {
+					case ".ico": {
+						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_ICO, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+						break;
+					}
+					case ".bmp": {
+						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_BMP, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+						break;
+					}
+					case ".jpg": {
+						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+						break;
+					}
+					case ".png": {
+						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+						break;
+					}
+					default: {
+						Bitmap img = FileIcon.getIcon(srcPath, icoSize);
+						if(img == null) {
+							return null;
+						}
+						dib = FreeImage.CreateFromBitmap(img);
+						break;
+						//return;
+					}
+				}
+				return new DibMd(dib);
+			} catch(Exception) { }
+
+			return null;
+		}
+
+		private DibMd formatOutput(DibMd dibMd, int icoSize, int bpp) {
+			if(dibMd == null) {
+				return null;
+			}
+
+			uint width = FreeImage.GetWidth(dibMd.dib);
+			uint height = FreeImage.GetHeight(dibMd.dib);
+
+			try {
+				FIBITMAP dibOut = formatImage(dibMd.dib, icoSize, bpp);
+
+				return new DibMd(dibOut);
+			} catch(Exception) { }
+
+			return null;
+		}
+
+		private void save(DibMd dibMd, string dstPath) {
+			if(dibMd == null) {
+				return;
+			}
+
+			string dstSuffix = Path.GetExtension(dstPath).ToLower();
+			FREE_IMAGE_FORMAT format = FREE_IMAGE_FORMAT.FIF_ICO;
+			FREE_IMAGE_SAVE_FLAGS flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE;
+			switch(dstSuffix) {
+				case ".png": format = FREE_IMAGE_FORMAT.FIF_PNG; flag = FREE_IMAGE_SAVE_FLAGS.PNG_Z_DEFAULT_COMPRESSION; break;
+				case ".jpg": format = FREE_IMAGE_FORMAT.FIF_JPEG; flag = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD; break;
+				case ".bmp": format = FREE_IMAGE_FORMAT.FIF_BMP; flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE; break;
+				case ".ico": default: break;
+			}
+			FreeImage.Save(format, dibMd.dib, dstPath, flag);
+			//bool isOk = FreeImage.Save(FREE_IMAGE_FORMAT.FIF_PNG, dibOut, dstPath + ".png", FREE_IMAGE_SAVE_FLAGS.PNG_INTERLACED);
+			//FreeImage.Unload(dibMd.dib);
+			//FreeImage.Unload(dib);
+		}
+
+		private void saveToStream(DibMd dibMd, string dstSuffix, Stream stream) {
+			if(dibMd == null) {
+				return;
+			}
+
+			//string dstSuffix = Path.GetExtension(dstPath).ToLower();
+			FREE_IMAGE_FORMAT format = FREE_IMAGE_FORMAT.FIF_ICO;
+			FREE_IMAGE_SAVE_FLAGS flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE;
+			switch(dstSuffix) {
+				case ".png": format = FREE_IMAGE_FORMAT.FIF_PNG; flag = FREE_IMAGE_SAVE_FLAGS.PNG_Z_DEFAULT_COMPRESSION; break;
+				case ".jpg": format = FREE_IMAGE_FORMAT.FIF_JPEG; flag = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD; break;
+				case ".bmp": format = FREE_IMAGE_FORMAT.FIF_BMP; flag = FREE_IMAGE_SAVE_FLAGS.BMP_SAVE_RLE; break;
+				case ".ico": default: break;
+			}
+
+			FreeImage.SaveToStream(dibMd.dib, stream, format, flag);
+		}
+
+		private void convert(string srcPath, string dstPath, int icoSize, int bpp) {
 			string srcSuffix = Path.GetExtension(srcPath).ToLower();
 			string dstSuffix = Path.GetExtension(dstPath).ToLower();
 			//bool isDir = Directory.Exists(srcPath);
@@ -240,43 +392,7 @@ namespace toIconCom.control {
 						dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
 						break;
 					}
-					//case ".exe": {
-					//	//var iconTotalCount = PrivateExtractIcons(srcPath, 0, 0, 0, null, null, 0, 0);
-					//	int iconTotalCount = 1;
-					//	IntPtr[] hIcons = new IntPtr[iconTotalCount];
-					//	int[] ids = new int[iconTotalCount];
-					//	var successCount = PrivateExtractIcons(srcPath, 0, 48, 48, hIcons, ids, iconTotalCount, 0);
-					//	if(successCount <= 0) {
-					//		//Bitmap img = Icon.ExtractAssociatedIcon(srcPath).ToBitmap();
-					//		Bitmap img = FileIcon.getIcon(srcPath).ToBitmap();
-					//		dib = FreeImage.CreateFromBitmap(img);
-					//		break;
-					//	}
-					//	using(var ico = Icon.FromHandle(hIcons[0])) {
-					//		dib = FreeImage.CreateFromBitmap(ico.ToBitmap());
-					//	}
-					//	DestroyIcon(hIcons[0]);
-					//	break;
-					//}
 					default: {
-						//if(isDir) {
-						//	Bitmap img = FileIcon.getIcon(srcPath);
-						//	if(img == null) {
-						//		return;
-						//	}
-						//	//Debug.WriteLine("aaa:" + img.Width + "," + img.Height);
-						//	dib = FreeImage.CreateFromBitmap(img);
-						//	break;
-						//} else {
-						//	//dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG, srcPath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
-						//	//Bitmap img = Icon.ExtractAssociatedIcon(srcPath).ToBitmap();
-						//	Bitmap img = FileIcon.getIcon(srcPath);
-						//	if(img == null) {
-						//		return;
-						//	}
-						//	//Debug.WriteLine("aaa:" + img.Width + "," + img.Height);
-						//	dib = FreeImage.CreateFromBitmap(img);
-						//}
 						Bitmap img = FileIcon.getIcon(srcPath, icoSize);
 						if(img == null) {
 							return;
